@@ -6,8 +6,9 @@
     xmlns:views="clr-namespace:PokeMaui.Views"
     Shell.FlyoutBehavior="Disabled">
 
-    <ShellContent Title="Home"
-                  ContentTemplate="{DataTemplate views:IndexView}"
-                  Route="/" />
+    <ShellContent Title="Pokemons"
+                  ContentTemplate="{DataTemplate views:IndexView}" />
 
+    <ShellContent Title="Detalhes"
+                  ContentTemplate="{DataTemplate views:PokemonDetailsView}" />
 </Shell>

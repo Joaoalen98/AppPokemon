@@ -55,6 +55,11 @@ public class PokemonService : IPokemonService
             {
                 Name = t.type.name
             }).ToList(),
+            Stats = req.stats.Select(s => new PokemonStat
+            {
+                Name = s.stat.name,
+                Value = s.base_stat,
+            }).ToList(),
         };
 
         return pokemon;

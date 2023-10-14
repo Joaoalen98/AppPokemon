@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:PokeMaui.ViewModels"
+             x:Name="Page"
              x:Class="PokeMaui.Views.IndexView"
              Title="IndexView"
              Shell.NavBarIsVisible="False">
@@ -55,7 +56,13 @@
                             ItemsSource="{Binding Pokemons}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame>
+                        <Frame BackgroundColor="Transparent">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={x:Reference Page}, 
+                                                      Path=BindingContext.GoToDetailsPageCommand}"
+                                                      CommandParameter="{Binding .}"/>
+                            </Frame.GestureRecognizers>
+
                             <Grid ColumnDefinitions="auto, *"
                                   RowSpacing="10"
                                   ColumnSpacing="10"
@@ -82,7 +89,9 @@
                                                    Margin="2">
 
                                                 <Label Text="{Binding Name}"
-                                                       FontSize="12"/>
+                                                       FontSize="12"
+                                                       TextColor="#444"
+                                                       FontAttributes="Bold"/>
                                             </Frame>
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>

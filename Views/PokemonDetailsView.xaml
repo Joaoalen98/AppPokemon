@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:PokeMaui.ViewModels"
+             x:Class="PokeMaui.Views.PokemonDetailsView"
+             Title="PokemonDetailsView"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.BindingContext>
+        <vm:PokemonDetailsViewModel/>
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="auto, *">
+        <Image Source="{Binding Pokemon.Images[0].Url}"
+               Grid.Row="0"/>
+
+        <Grid Grid.Row="1"
+              Padding="20"
+              RowDefinitions="auto, auto, auto"
+              RowSpacing="10">
+            <Label Text="{Binding Pokemon.Name}"
+                   Grid.Row="0"
+                   FontSize="25"
+                   FontAttributes="Bold"/>
+
+            <Frame Grid.Row="1"
+                   Padding="10"
+                   CornerRadius="10"
+                   BackgroundColor="Transparent">
+                <CollectionView ItemsSource="{Binding Pokemon.Stats}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid ColumnDefinitions="*, *"
+                                  Margin="0,0,10,0">
+                                <Label Text="{Binding Name}"
+                                       Grid.Column="0"
+                                       FontAttributes="Bold"/>
+
+                                <Label Text="{Binding Value}"
+                                       Grid.Column="1"
+                                       HorizontalOptions="End"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Frame>
+        </Grid>
+    </Grid>
+</ContentPage>

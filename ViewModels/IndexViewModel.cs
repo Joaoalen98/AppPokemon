@@ -50,4 +50,13 @@ public partial class IndexViewModel : ObservableObject
 
         await GetAllPokemons();
     }
+
+    [RelayCommand]
+    public async Task GoToDetailsPage(Pokemon pokemon)
+    {
+        await Shell.Current.GoToAsync("/pokemons/details", new Dictionary<string, object>
+        {
+            { "pokemon", pokemon },
+        });
+    }
 }
