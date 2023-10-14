@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:PokeMaui.ViewModels"
+             x:Class="PokeMaui.Views.IndexView"
+             Title="IndexView"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.BindingContext>
+        <vm:IndexViewModel/>
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <Grid RowDefinitions="auto, 40, 20, *"
+              Padding="20">
+
+            <Label Text="Pokemons"
+                   Grid.Row="0"
+                   FontSize="20"
+                   FontAttributes="Bold"/>
+
+            <Grid ColumnDefinitions="*, *"
+                  Grid.Row="1">
+                <Grid.Triggers>
+                    <DataTrigger TargetType="Grid" Binding="{Binding IsLoading}" Value="True">
+                        <Setter Property="IsVisible" Value="False"/>
+                    </DataTrigger>
+                </Grid.Triggers>
+
+                <Button Text="Anterior"
+                        Grid.Column="0"
+                        HorizontalOptions="Start"
+                        Command="{Binding ChangePageCommand}"
+                        CommandParameter="previous"
+                        FontSize="12">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding Offset}" Value="0">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+
+                <Button Text="Próximo"
+                        Grid.Column="1"
+                        HorizontalOptions="End"
+                        Command="{Binding ChangePageCommand}"
+                        CommandParameter="next"
+                        FontSize="12"/>
+            </Grid>
+
+            <ActivityIndicator IsRunning="{Binding IsLoading}"
+                               Grid.Row="2"/>
+
+            <CollectionView Grid.Row="3"
+                            ItemsSource="{Binding Pokemons}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame>
+                            <Grid ColumnDefinitions="auto, *"
+                                  RowSpacing="10"
+                                  ColumnSpacing="10"
+                                  RowDefinitions="auto, auto">
+                                <Image Source="{Binding Images[0].Url}"
+                                       Grid.Column="0"
+                                       Grid.Row="0"
+                                       Grid.RowSpan="2"
+                                       WidthRequest="50"/>
+
+                                <Label Text="{Binding Name}"
+                                       Grid.Column="1"
+                                       Grid.Row="0"/>
+
+                                <CollectionView ItemsSource="{Binding Types}"
+                                                ItemsLayout="HorizontalList"
+                                                Grid.Column="1"
+                                                Grid.Row="1">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Frame BackgroundColor="#EFEFEF"
+                                                   CornerRadius="20"
+                                                   Padding="5"
+                                                   Margin="2">
+
+                                                <Label Text="{Binding Name}"
+                                                       FontSize="12"/>
+                                            </Frame>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </ScrollView>
+</ContentPage>
