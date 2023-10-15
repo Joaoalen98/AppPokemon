@@ -18,7 +18,7 @@ public class PokemonService : IPokemonService
     public async Task<IEnumerable<Pokemon>> GetAllPokemons(int limit, int offset)
     {
         string url = $"pokemon?limit={limit}&offset={offset}";
-        var req = await _http.GetFromJsonAsync<PokemonList>(url);
+        var req = await _http.GetFromJsonAsync<NamedAPIResourceList>(url);
 
         List<Pokemon> pokemons = new List<Pokemon>();
 
@@ -33,29 +33,29 @@ public class PokemonService : IPokemonService
 
     public async Task<Pokemon> GetPokemonByName(string name)
     {
-        var req = await _http.GetFromJsonAsync<PokemonRoot>($"pokemon/{name}");
+        var req = await _http.GetFromJsonAsync<PokemonApiModel>($"pokemon/{name}");
 
         var pokemon = new Pokemon
         {
             Name = req.name,
-            Images = new List<PokemonImage>
+            Images = new List<Pokemon.PokemonImage>
             {
-                new PokemonImage
+                new Pokemon.PokemonImage
                 {
                     Name = "Front Default",
                     Url = req.sprites.front_default,
                 },
-                new PokemonImage
+                new Pokemon.PokemonImage
                 {
                     Name = "Back Default",
                     Url = req.sprites.back_default,
                 },
             },
-            Types = req.types.Select(t => new PokemonType
+            Types = req.types.Select(t => new Pokemon.PokemonType
             {
                 Name = t.type.name
             }).ToList(),
-            Stats = req.stats.Select(s => new PokemonStat
+            Stats = req.stats.Select(s => new Pokemon.PokemonStat
             {
                 Name = s.stat.name,
                 Value = s.base_stat,

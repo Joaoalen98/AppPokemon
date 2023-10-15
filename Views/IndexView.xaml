@@ -56,7 +56,8 @@
                             ItemsSource="{Binding Pokemons}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame BackgroundColor="Transparent">
+                        <Frame BackgroundColor="Transparent"
+                               Margin="0,0,0,10">
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Source={x:Reference Page}, 
                                                       Path=BindingContext.GoToDetailsPageCommand}"
